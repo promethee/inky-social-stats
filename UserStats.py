@@ -1,3 +1,4 @@
+import buttonshim
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
@@ -29,20 +30,32 @@ class UserStats:
   def toggle(self, _show):
     self.show = _show
   def display(self):
+    buttonshim.set_pixel(0x00, 0x00, 0xff)
     print('[✓] displaying', self.handle, 'stats')
     draw.rectangle((0, 0, inky_display.resolution[0], inky_display.resolution[1]), fill="white")
     draw.text((0, 0), '@' + self.handle, inky_display.colour, font)
     draw.text((0, 24), str(self.tweets) + ' tweets', inky_display.BLACK, font)
     draw.text((0, 48), str(self.followers) + ' followers', inky_display.BLACK, font)
     draw.text((0, 72), str(self.following) + ' following', inky_display.BLACK, font)
+    buttonshim.set_pixel(0x00, 0x00, 0x00)
+    buttonshim.set_pixel(0xff, 0xff, 0x00)
     inky_display.set_image(img)
+    buttonshim.set_pixel(0x00, 0x00, 0x00)
+    buttonshim.set_pixel(0xff, 0xff, 0x00)
+    buttonshim.set_pixel(0x00, 0x00, 0x00)
     inky_display.show(img)
 
   def update(self):
-    print('\n[✓] fetching', self.handle, 'page')
+    buttonshim.set_pixel(0x00, 0x00, 0xff)
+    print('\n[?] fetching', self.handle, 'page')
+    buttonshim.set_pixel(0x00, 0x00, 0x00)
+    buttonshim.set_pixel(0x00, 0x00, 0xff)
     r = requests.get(self.url + self.handle)
     print('[✓] parsing', self.handle, 'page')
+    buttonshim.set_pixel(0x00, 0x00, 0x00)
     raw_html = r.text
     soup = BeautifulSoup(raw_html, 'html.parser')
+    buttonshim.set_pixel(0x00, 0x00, 0xff)
     stats = soup.find_all(class_='statnum')
     self.tweets, self.followers, self.following = [stat.get_text() for stat in stats]
+    buttonshim.set_pixel(0x00, 0x00, 0x00)
