@@ -25,6 +25,8 @@ class UserStats:
     self.tweets = -1
     self.followers = -1
     self.following = -1
+    self.previous_followers = -1
+    self.previous_following = -1
     self.show = False
     self.update()
   def toggle(self, _show):
@@ -59,3 +61,5 @@ class UserStats:
     stats = soup.find_all(class_='statnum')
     self.tweets, self.following, self.followers = [stat.get_text() for stat in stats]
     buttonshim.set_pixel(0x00, 0x00, 0x00)
+    if (self.followers != self.previous_followers) or (self.following != self.followinprevious_following):
+      self.display()
