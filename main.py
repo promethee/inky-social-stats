@@ -11,8 +11,7 @@ from UserStats import UserStats
 KEYCODES = [e.KEY_A, e.KEY_B, e.KEY_C, e.KEY_D, e.KEY_E]
 BUTTONS = [buttonshim.BUTTON_A, buttonshim.BUTTON_B, buttonshim.BUTTON_C, buttonshim.BUTTON_D, buttonshim.BUTTON_E]
 
-twitter_index = 0
-twitter_handles = list()
+social_handles = list()
 
 print('[?] will try to open file named "twitter.json"')
 try:
@@ -21,36 +20,29 @@ try:
     print('[✓] file found with', len(data), 'handle(s)')
     for i in range(len(data)):
       print('[✓] twitter handle found at position', i, data[i])
-      twitter_handles.append(data[i])
+      social_handles.append(data[i])
 except FileNotFoundError as e:
   print('[⨉] missing file named "twitter.json"')
 
-print('[✓] twitter handles loaded')
+print('[✓] handles loaded')
 
-TwitterUsers = list()
+Users = list()
 
-for i in range(len(twitter_handles)):
-  TwitterUsers.append(UserStats(twitter_handles[i], i))
+for i in range(len(social_handles)):
+  # Only twitter for now
+  Users.append(UserStats(social_handles[i], 'https://mobile.twitter.com/'))
 
-if len(TwitterUsers) > 0:
-  TwitterUsers[0].toggle(True)
-
-try:
-    ui = UInput({e.EV_KEY: KEYCODES}, name="Button-SHIM", bustype=e.BUS_USB)
-
-except uinput.UInputError as e:
-    print(e.message)
-    print("Have you tried running as root? sudo {}".format(sys.argv[0]))
-    sys.exit(0)
+if len(Users) > 0:
+  Users[0].toggle(True)
 
 @buttonshim.on_press(BUTTONS)
 def button_p_handler(button, pressed):
-    for i in range(len(TwitterUsers)):
-      TwitterUsers[i].toggle(i == BUTTONS.index(button))
-    TwitterUsers[BUTTONS.index(button)].update()
+    for i in range(len(Users)):
+      Users[i].toggle(i == BUTTONS.index(button))
+    Users[BUTTONS.index(button)].update()
   
 @buttonshim.on_release(BUTTONS)
 def button_r_handler(button, pressed):
-    TwitterUsers[BUTTONS.index(button)].display()
+    Users[BUTTONS.index(button)].display()
 
 signal.pause()
