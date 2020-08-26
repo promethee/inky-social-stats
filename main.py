@@ -77,6 +77,9 @@ def button_p_handler(button, pressed):
 def button_r_handler(button, pressed):
     color_scan()
     buttonshim.set_pixel(0x00, 0x00, 0x00)
+    index = BUTTONS.index(button)
+    if index > len(Users):
+      return
     Users[BUTTONS.index(button)].display()
 
 signal.pause()
