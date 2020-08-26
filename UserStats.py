@@ -57,5 +57,5 @@ class UserStats:
     soup = BeautifulSoup(raw_html, 'html.parser')
     buttonshim.set_pixel(0x00, 0x00, 0xff)
     stats = soup.find_all(class_='statnum')
-    self.tweets, self.followers, self.following = [stat.get_text() for stat in stats]
+    self.tweets, self.following, self.followers = [stat.get_text() for stat in stats]
     buttonshim.set_pixel(0x00, 0x00, 0x00)
