@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 import signal
 from evdev import uinput, UInput, ecodes as e
 import buttonshim
-from TwitterUserStats import TwitterUserStats
+from UserStats import UserStats
 
 KEYCODES = [e.KEY_A, e.KEY_B, e.KEY_C, e.KEY_D, e.KEY_E]
 BUTTONS = [buttonshim.BUTTON_A, buttonshim.BUTTON_B, buttonshim.BUTTON_C, buttonshim.BUTTON_D, buttonshim.BUTTON_E]
@@ -30,7 +30,7 @@ print('[✓] twitter handles loaded')
 TwitterUsers = list()
 
 for i in range(len(twitter_handles)):
-  TwitterUsers.append(TwitterUserStats(twitter_handles[i], i))
+  TwitterUsers.append(UserStats(twitter_handles[i], i))
 
 if len(TwitterUsers) > 0:
   TwitterUsers[0].toggle(True)
