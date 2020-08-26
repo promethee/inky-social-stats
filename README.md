@@ -26,7 +26,7 @@ Show social stats (followers, stars, etc) of up to 5 accounts, by scrapping web 
   ```
 - Add  
   ```
-  @reboot python ~/inky-twittertats/main.py &
+  @reboot python ~/inky-social-stats/main.py &
   ```
   to your crontab to launch it upon raspberry start
 
