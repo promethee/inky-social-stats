@@ -61,9 +61,15 @@ class UserStats:
     stats = soup.find_all(class_='statnum')
     self.tweets, self.following, self.followers = [stat.get_text() for stat in stats]
     buttonshim.set_pixel(0x00, 0x00, 0x00)
-    if (self.followers != self.previous_followers) or (self.following != self.previous_following):
-      if (self.followers != self.previous_followers):
-        self.followers = self.previous_followers
-      if (self.following != self.previous_following):
-        self.following = self.previous_following
+    need_to_show_update = False
+
+    if (self.followers != self.previous_followers):
+      self.followers = self.previous_followers
+      need_to_show_update = True
+
+    if (self.following != self.previous_following):
+      self.following = self.previous_following
+      need_to_show_update = True
+
+    if need_to_show_update:
       self.display()
