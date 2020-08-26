@@ -64,11 +64,11 @@ class UserStats:
     need_to_show_update = False
 
     if (self.followers != self.previous_followers):
-      self.followers = self.previous_followers
+      self.previous_followers = self.followers
       need_to_show_update = True
 
     if (self.following != self.previous_following):
-      self.following = self.previous_following
+      self.previous_following = self.following
       need_to_show_update = True
 
     if need_to_show_update:
